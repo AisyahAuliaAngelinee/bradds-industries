@@ -4,7 +4,8 @@ export type ProductType = {
 	shortDescription: string;
 	description: string;
 	price: number;
-	stocks: number | string;
+	stocks: number;
+	isLimted: boolean;
 	sizes: string[];
 	colors: string[];
 	images: Record<string, string[]>;
