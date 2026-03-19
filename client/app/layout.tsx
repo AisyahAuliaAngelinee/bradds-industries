@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -14,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: "Brrads Industries",
-	description: "Reza Auditore merch fashion & style",
+	description: "Reza Auditore merch mental badja fashion & style",
 };
 
 export default function RootLayout({
@@ -27,7 +29,9 @@ export default function RootLayout({
 			lang="en"
 			className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
 			<body className="mx-auto p-4 sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl">
+				<Navbar />
 				{children}
+				<Footer />
 			</body>
 		</html>
 	);

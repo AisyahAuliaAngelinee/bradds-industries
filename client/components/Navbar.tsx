@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import { Bell, Home, ShoppingCart } from "lucide-react";
 
 export default function Navbar() {
 	return (
-		<nav className="w-full flex items-center justify-between border-b border-gray-200 pb-4">
+		<nav className="w-full flex items-center justify-between border-b border-gray-200 pb-4 select-none">
 			{/* LEFT */}
-			<Link href="/" className="flex items-center">
+			<Link href="/" className="flex items-center gap-2">
 				<Image
 					src="/logo-removebg.png"
 					alt="logo"
@@ -20,8 +21,14 @@ export default function Navbar() {
 			</Link>
 
 			{/* RIGHT */}
-			<div className="">
+			<div className="flex items-center gap-6">
 				<SearchBar />
+				<Link href="/">
+					<Home className="w-4 h-4 text-gray-600" />
+				</Link>
+				<Bell className="w-4 h-4 text-gray-600" />
+				<ShoppingCart className="w-4 h-4 text-gray-600" />
+				<Link href="/login">Sign in</Link>
 			</div>
 		</nav>
 	);
