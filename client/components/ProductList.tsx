@@ -11,6 +11,7 @@ const products: ProductsType = [
 		description:
 			"Code merch edition: FIRST GENERATION WHITE, Bahan: Cotton Combed 30 S, Stock: HABIS",
 		price: 150000,
+		stocks: 0,
 		sizes: ["S", "M", "L"],
 		colors: ["white"],
 		images: {
@@ -22,8 +23,9 @@ const products: ProductsType = [
 		name: "FIRST GENERATION INDUSTRIES",
 		shortDescription: "FIRST GENERATION EDITION",
 		description:
-			"Code merch edition: FIRST GENERATION INDUSTRIES, Bahan: Cotton Combed 30 S, Stock: HABIS",
+			"Code merch edition: FIRST GENERATION INDUSTRIES, Bahan: Cotton Combed 30 S",
 		price: 150000,
+		stocks: 0,
 		sizes: ["S", "M", "L"],
 		colors: ["white"],
 		images: {
@@ -35,8 +37,9 @@ const products: ProductsType = [
 		name: "FIRST GENERATION BLACK",
 		shortDescription: "FIRST GENERATION EDITION",
 		description:
-			"Code merch edition: FIRST GENERATION BLACK, Bahan: Cotton Combed 30 S, Stock: HABIS",
+			"Code merch edition: FIRST GENERATION BLACK, Bahan: Cotton Combed 30 S",
 		price: 150000,
+		stocks: 0,
 		sizes: ["S", "M", "L"],
 		colors: ["black"],
 		images: {
@@ -46,10 +49,11 @@ const products: ProductsType = [
 	{
 		id: 4,
 		name: "2nd GENERATION BLACK",
-		shortDescription: "2nd GENERATION EDITION",
+		shortDescription: "2nd GENERATION LIMITED EDITION",
 		description:
-			"Code merch edition: 2nd GENERATION BLACK, Bahan: Cotton Combed 30 S, Stock: Limited Edition",
+			"Code merch edition: 2nd GENERATION BLACK, Bahan: Cotton Combed 30 S",
 		price: 79000,
+		stocks: "Limited",
 		sizes: ["M", "L"],
 		colors: ["black"],
 		images: {
@@ -63,10 +67,11 @@ const products: ProductsType = [
 	{
 		id: 5,
 		name: "GEN 3 BLACK EDITION",
-		shortDescription: "BRRADS INDUSTRIES GEN 3 BLACK EDITION",
+		shortDescription: "BRRADS INDUSTRIES GEN 3 BLACK LIMITED EDITION",
 		description:
-			"Code merch edition: BRRADS INDUSTRIES GEN 3 BLACK EDITION, Bahan: Cotton Combed 30 S, Stock: Limited Edition",
+			"Code merch edition: BRRADS INDUSTRIES GEN 3 BLACK EDITION, Bahan: Cotton Combed 30 S",
 		price: 79000,
+		stocks: "Limited",
 		sizes: ["M", "L"],
 		colors: ["black"],
 		images: {
@@ -76,14 +81,15 @@ const products: ProductsType = [
 	{
 		id: 6,
 		name: "GEN 3 WHITE EDITION",
-		shortDescription: "BRRADS INDUSTRIES GEN 3 WHTIE EDITION",
+		shortDescription: "BRRADS INDUSTRIES GEN 3 WHTIE LIMITED EDITION",
 		description:
-			"Code merch edition: BRRADS INDUSTRIES GEN 3 WHITE EDITION, Bahan: Cotton Combed 30 S, Stock: Limited Edition",
+			"Code merch edition: BRRADS INDUSTRIES GEN 3 WHITE EDITION, Bahan: Cotton Combed 30 S",
 		price: 79000,
+		stocks: "Limited",
 		sizes: ["M", "L"],
 		colors: ["white"],
 		images: {
-			black: ["/products/3th/3th-gen-white.png"],
+			white: ["/products/3th/3th-gen-white.png"],
 		},
 	},
 	{
@@ -91,8 +97,9 @@ const products: ProductsType = [
 		name: "Black Centurion Edition",
 		shortDescription: "BRRADS INDUSTRIES BLACK CENTURION EDITION",
 		description:
-			"Code merch edition: Black Centurion, Bahan: Cotton Combed 30 S, Stock: Ada dong",
+			"Code merch edition: Black Centurion, Bahan: Cotton Combed 30 S",
 		price: 79000,
+		stocks: 10,
 		sizes: ["M", "L", "XL"],
 		colors: ["black"],
 		images: {
@@ -106,6 +113,7 @@ const products: ProductsType = [
 		description:
 			"Code merch edition: Brrads Simpre, Bahan: Cotton Combed 30 S, Sablon: DTF High Quality",
 		price: 79000,
+		stocks: 10,
 		sizes: ["M", "L", "XL"],
 		colors: ["black", "white"],
 		images: {

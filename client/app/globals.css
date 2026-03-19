@@ -18,3 +18,27 @@ body {
 	color: var(--foreground);
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+/* kecilin arrow */
+.swiper-button-prev,
+.swiper-button-next {
+	transform: scale(0.6);
+	color: white;
+}
+
+/* posisi biar lebih rapih */
+.swiper-button-prev {
+	left: 4px;
+}
+.swiper-button-next {
+	right: 4px;
+}
+.swiper-pagination-bullet {
+	width: 6px;
+	height: 6px;
+	opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+	opacity: 1;
+}
