@@ -1,5 +1,199 @@
 "use client";
 
+import PaymentForm from "@/components/PaymentForm";
+import ShippingForm from "@/components/ShippingForm";
+import { CartItemsType } from "@/types/types";
+import { ArrowRight, Trash2 } from "lucide-react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
+
+const steps = [
+	{ id: 1, title: "Shopping Cart" },
+	{ id: 2, title: "Shipping Address" },
+	{ id: 3, title: "Payment Method" },
+];
+
+// TEMPORARY
+const cartItems: CartItemsType = [
+	{
+		id: 1,
+		name: "GEN 2 BLACK",
+		shortDescription: "2nd GENERATION LIMITED EDITION",
+		description:
+			"Code merch edition: 2nd GENERATION BLACK, Bahan: Cotton Combed 30 S",
+		price: 79000,
+		stocks: 10,
+		isLimted: true,
+		sizes: ["M", "L"],
+		colors: ["black"],
+		images: {
+			black: [
+				"/products/2nd/2nd-gen-black.png",
+				"/products/2nd/2nd-gen-black-front.png",
+				"/products/2nd/2nd-gen-black-back.png",
+			],
+		},
+		quantity: 1,
+		selectedSize: "M",
+		selectedColor: "black",
+	},
+	{
+		id: 2,
+		name: "GEN 3 BLACK EDITION",
+		shortDescription: "BRRADS INDUSTRIES GEN 3 BLACK LIMITED EDITION",
+		description:
+			"Code merch edition: BRRADS INDUSTRIES GEN 3 BLACK EDITION, Bahan: Cotton Combed 30 S",
+		price: 79000,
+		stocks: 10,
+		isLimted: true,
+		sizes: ["M", "L"],
+		colors: ["black"],
+		images: {
+			black: ["/products/3th/3th-gen-black.png"],
+		},
+		quantity: 4,
+		selectedSize: "M",
+		selectedColor: "black",
+	},
+	{
+		id: 3,
+		name: "GEN 3 WHITE EDITION",
+		shortDescription: "BRRADS INDUSTRIES GEN 3 WHTIE LIMITED EDITION",
+		description:
+			"Code merch edition: BRRADS INDUSTRIES GEN 3 WHITE EDITION, Bahan: Cotton Combed 30 S",
+		price: 79000,
+		stocks: 10,
+		isLimted: true,
+		sizes: ["M", "L"],
+		colors: ["white"],
+		images: {
+			white: ["/products/3th/3th-gen-white.png"],
+		},
+		quantity: 3,
+		selectedSize: "L",
+		selectedColor: "white",
+	},
+];
+
 export default function CartPage() {
-	return <div className="">CartPage</div>;
+	const searchParams = useSearchParams();
+	const router = useRouter();
+	const [shippingForm, setShippingForm] = React.useState(null);
+
+	const activeStep = parseInt(searchParams.get("step") || "1");
+
+	const subtotal = cartItems.reduce(
+		(acc, item) => acc + item.price * item.quantity,
+		0,
+	);
+
+	const discount = cartItems.reduce((total, item) => {
+		const discountPerItem = item.price * 0.1;
+		return total + discountPerItem * item.quantity;
+	}, 0);
+
+	const shipping = 9000;
+
+	const total = subtotal - discount + shipping;
+	return (
+		<div className="flex flex-col gap-8 items-center justify-center mt-12">
+			{/* TITLE */}
+			<h1 className="text-2xl font-medium">Your Shopping Cart</h1>
+
+			{/* STEPS */}
+			<div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+				{steps.map((step) => (
+					<div
+						key={step.id}
+						className={`flex items-center gap-2 border-b-2 pb-4 ${step.id === activeStep ? "border-gray-800" : "border-gray-400"}`}>
+						<div
+							className={`w-6 h-6 rounded-full text-white p-4 flex items-center justify-center ${step.id === activeStep ? "bg-gray-800" : "bg-gray-400"}`}>
+							{step.id}
+						</div>
+						<p
+							className={`text-sm font-medium ${step.id === activeStep ? "text-gray-800" : "text-gray-400"}`}>
+							{step.title}
+						</p>
+					</div>
+				))}
+			</div>
+
+			{/* STEPS & DETAILS */}
+			<div className="w-full flex flex-col lg:flex-row gap-16">
+				{/* STEPS */}
+				<div className="w-full lg:w-7/12 shadow-lg border border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+					{activeStep === 1 ? (
+						cartItems.map((item) => (
+							// SINGLE CART ITEMS
+							<div key={item.id} className="flex items-center justify-between">
+								{/* IMAGE AND DETAILS */}
+								<div className="flex gap-8">
+									<div className="relative w-32 h-32 bg-gray-50 rounded-lg overflow-hidden">
+										<Image
+											src={item.images[item.selectedColor][0]}
+											alt={item.name}
+											fill
+											className="object-contain"
+										/>
+									</div>
+								</div>
+
+								{/* DELETE BUTTON */}
+								<button className="w-8 h-8 rounded-full bg-red-100 hover:bg-red-200 transition-all duration-300 text-red-400 flex items-center justify-center cursor-pointer">
+									<Trash2 className="size-3" />
+								</button>
+							</div>
+						))
+					) : activeStep === 2 ? (
+						<ShippingForm />
+					) : activeStep === 3 && shippingForm ? (
+						<PaymentForm />
+					) : (
+						<p className="text-sm text-gray-500">
+							Please fill the shipping form to continue.
+						</p>
+					)}
+				</div>
+
+				{/* DETAILS */}
+				<div className="w-full lg:w-5/12 shadow-lg border border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+					<h2 className="font-semibold">Cart Details</h2>
+					<div className="flex flex-col gap-4">
+						<div className="flex justify-between text-sm">
+							<p className="text-gray-500">Subtotal</p>
+							<p className="font-medium">
+								Rp{subtotal.toLocaleString("id-ID")}
+							</p>
+						</div>
+						<div className="flex justify-between text-sm">
+							<p className="text-gray-500">Discount(10%)</p>
+							<p className="font-medium">
+								Rp{discount.toLocaleString("id-ID")}
+							</p>
+						</div>
+						<div className="flex justify-between text-sm">
+							<p className="text-gray-500">Shipping Fee</p>
+							<p className="font-medium">
+								Rp{shipping.toLocaleString("id-ID")}
+							</p>
+						</div>
+						<hr className="border-gray-200" />
+						<div className="flex justify-between">
+							<p className="text-gray-800 font-semibold">Total</p>
+							<p className="font-medium">Rp{total.toLocaleString("id-ID")}</p>
+						</div>
+					</div>
+					{activeStep === 1 && (
+						<button
+							onClick={() => router.push("/cart?step=2", { scroll: false })}
+							className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2">
+							Continue
+							<ArrowRight className="size-3" />
+						</button>
+					)}
+				</div>
+			</div>
+		</div>
+	);
 }

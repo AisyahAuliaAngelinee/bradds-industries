@@ -11,3 +11,9 @@ export type ProductType = {
 	images: Record<string, string[]>;
 };
 export type ProductsType = ProductType[];
+export type CartItemType = ProductType & {
+	quantity: number;
+	selectedSize: string;
+	selectedColor: string;
+};
+export type CartItemsType = CartItemType[];

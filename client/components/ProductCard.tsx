@@ -11,7 +11,7 @@ import { Autoplay } from "swiper/modules";
 // styles
 import "swiper/css";
 import React, { useMemo } from "react";
-import { Flame, ShoppingCart } from "lucide-react";
+import { Check, Flame, ShoppingCart } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function ProductCard({ product }: { product: ProductType }) {
@@ -19,6 +19,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
 		size: product.sizes[0],
 		color: product.colors[0],
 	});
+	const [activeCheck, setActiveCheck] = React.useState<string | null>(null);
 
 	const firstColors = product.colors[0];
 
@@ -39,6 +40,14 @@ export default function ProductCard({ product }: { product: ProductType }) {
 			...prev,
 			[type]: value,
 		}));
+
+		if (type === "color") {
+			setActiveCheck(value);
+
+			setTimeout(() => {
+				setActiveCheck(null);
+			}, 800); // durasi animasi
+		}
 	};
 
 	return (
@@ -118,16 +127,20 @@ export default function ProductCard({ product }: { product: ProductType }) {
 							{product.colors.map((color) => (
 								<div
 									key={color}
-									className="cursor-pointer"
-									onChange={(e) =>
-										handleProductType({ type: "color", value: color })
-									}>
+									onClick={() => {
+										if (product.stocks === 0) return;
+										handleProductType({ type: "color", value: color });
+									}}>
 									<Tooltip>
 										<TooltipTrigger>
 											<div
-												className={`w-3.5 h-3.5 rounded-full ${color === "white" && "ring ring-gray-500"}`}
-												style={{ background: color }}
-											/>
+												className={`relative cursor-pointer w-4 h-4 rounded-full shrink-0 flex items-center justify-center transition-all duration-300 ${color === "white" && "ring ring-gray-500"}`}
+												style={{ background: color }}>
+												<span
+													className={`absolute text-green-500 text-xs font-bold transition-all duration-300 ${activeCheck === color ? "opacity-100 scale-100" : "opacity-0 scale-50"}`}>
+													✓
+												</span>
+											</div>
 										</TooltipTrigger>
 										<TooltipContent>
 											<p>{color.toUpperCase()}</p>
@@ -140,14 +153,21 @@ export default function ProductCard({ product }: { product: ProductType }) {
 				</div>
 
 				{/* PRICE AND ADD TO CART */}
-				<div className="flex items-center justify-between gap-2">
+				<div className="flex items-center justify-between gap-2 select-none">
 					<p className="font-medium text-sm">
 						Rp{product.price.toLocaleString("id-ID")}
 					</p>
-					<button className="ring-1 ring-gray-200 shadow-lg rounded-md px-2 py-1 text-xs cursor-pointer hover:text-white hover:bg-black transition-all duration-300 flex items-center gap-2">
-						<ShoppingCart className="size-3" />
-						Add to cart
-					</button>
+
+					{product.stocks > 0 ? (
+						<button className="ring-1 ring-gray-200 shadow-lg rounded-md px-2 py-2 text-xs cursor-pointer hover:text-white hover:bg-black transition-all duration-300 flex items-center gap-2">
+							<ShoppingCart className="size-4" />
+							Add to cart
+						</button>
+					) : (
+						<span className="text-red-500 font-bold text-md tracking-widest rounded-md border-2 border-red-500 px-2 py-1 bg-black/60 shadow-[0_0_10px_rgba(255,0,0,0.7)]">
+							SOLD OUT
+						</span>
+					)}
 				</div>
 			</div>
 		</div>
