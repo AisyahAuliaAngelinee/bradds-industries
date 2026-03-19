@@ -10,11 +10,16 @@ import { Autoplay } from "swiper/modules";
 
 // styles
 import "swiper/css";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { Flame, ShoppingCart } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function ProductCard({ product }: { product: ProductType }) {
+	const [productTypes, setProductTypes] = React.useState({
+		size: product.sizes[0],
+		color: product.colors[0],
+	});
+
 	const firstColors = product.colors[0];
 
 	const images = useMemo(() => {
@@ -22,6 +27,19 @@ export default function ProductCard({ product }: { product: ProductType }) {
 	}, [product.images, firstColors]);
 
 	const isSoldOut = product.stocks === 0;
+
+	const handleProductType = ({
+		type,
+		value,
+	}: {
+		type: "size" | "color";
+		value: string;
+	}) => {
+		setProductTypes((prev) => ({
+			...prev,
+			[type]: value,
+		}));
+	};
 
 	return (
 		<div className="shadow-lg rounded-lg overflow-hidden">
@@ -81,7 +99,10 @@ export default function ProductCard({ product }: { product: ProductType }) {
 						<select
 							name="size"
 							id="size"
-							className="ring ring-gray-300 rounded-md px-2 py-1">
+							className="ring ring-gray-300 rounded-md px-2 py-1"
+							onChange={(e) =>
+								handleProductType({ type: "size", value: e.target.value })
+							}>
 							{product.sizes.map((size) => (
 								<option key={size} value={size}>
 									{size.toUpperCase()}
@@ -95,20 +116,23 @@ export default function ProductCard({ product }: { product: ProductType }) {
 						<span className="text-gray-500">Color</span>
 						<div className="flex items-center gap-2">
 							{product.colors.map((color) => (
-								<div key={color} className="">
-									<p>
-										<Tooltip>
-											<TooltipTrigger>
-												<div
-													className={`w-3.5 h-3.5 rounded-full ${color === "white" && "ring ring-gray-500"}`}
-													style={{ background: color }}
-												/>
-											</TooltipTrigger>
-											<TooltipContent>
-												<p>{color.toUpperCase()}</p>
-											</TooltipContent>
-										</Tooltip>
-									</p>
+								<div
+									key={color}
+									className="cursor-pointer"
+									onChange={(e) =>
+										handleProductType({ type: "color", value: color })
+									}>
+									<Tooltip>
+										<TooltipTrigger>
+											<div
+												className={`w-3.5 h-3.5 rounded-full ${color === "white" && "ring ring-gray-500"}`}
+												style={{ background: color }}
+											/>
+										</TooltipTrigger>
+										<TooltipContent>
+											<p>{color.toUpperCase()}</p>
+										</TooltipContent>
+									</Tooltip>
 								</div>
 							))}
 						</div>

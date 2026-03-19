@@ -31,7 +31,7 @@ export default function Categories() {
 	const router = useRouter();
 	const pathname = usePathname();
 
-	const selectedCategory = searchParams.get("category");
+	const selectedCategory = searchParams.get("category") || "all";
 
 	const handleChange = (value: string | null) => {
 		const params = new URLSearchParams(searchParams);
