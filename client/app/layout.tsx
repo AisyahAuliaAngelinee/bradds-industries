@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -31,11 +32,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={`${poppins.className} h-full antialiased`}>
-			<body className="mx-auto p-4 sm:px-0 sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl">
-				<Navbar />
-				<TooltipProvider>{children}</TooltipProvider>
-				<Footer />
+		<html lang="en">
+			<body className={`${poppins.className} h-full antialiased`}>
+				<div className="mx-auto p-4 sm:px-0 sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl">
+					<Navbar />
+					<TooltipProvider>{children}</TooltipProvider>
+					<Footer />
+				</div>
+				<ToastContainer position="top-center" hideProgressBar stacked />
 			</body>
 		</html>
 	);

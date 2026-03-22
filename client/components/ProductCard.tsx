@@ -11,8 +11,10 @@ import { Autoplay } from "swiper/modules";
 // styles
 import "swiper/css";
 import React, { useMemo } from "react";
-import { Check, Flame, ShoppingCart } from "lucide-react";
+import { Flame, ShoppingCart } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import useCartStore from "@/store/cartStore";
+import { toast } from "react-toastify";
 
 export default function ProductCard({ product }: { product: ProductType }) {
 	const [productTypes, setProductTypes] = React.useState({
@@ -20,6 +22,8 @@ export default function ProductCard({ product }: { product: ProductType }) {
 		color: product.colors[0],
 	});
 	const [activeCheck, setActiveCheck] = React.useState<string | null>(null);
+
+	const { addToCart } = useCartStore();
 
 	const firstColors = product.colors[0];
 
@@ -48,6 +52,16 @@ export default function ProductCard({ product }: { product: ProductType }) {
 				setActiveCheck(null);
 			}, 800); // durasi animasi
 		}
+	};
+
+	const handleAddToCart = () => {
+		addToCart({
+			...product,
+			quantity: 1,
+			selectedSize: productTypes.size,
+			selectedColor: productTypes.color,
+		});
+		toast.success("Product added to cart");
 	};
 
 	return (
@@ -159,7 +173,10 @@ export default function ProductCard({ product }: { product: ProductType }) {
 					</p>
 
 					{product.stocks > 0 ? (
-						<button className="ring-1 ring-gray-200 shadow-lg rounded-md px-2 py-2 text-xs cursor-pointer hover:text-white hover:bg-black transition-all duration-300 flex items-center gap-2">
+						<button
+							type="button"
+							onClick={handleAddToCart}
+							className="ring-1 ring-gray-200 shadow-lg rounded-md px-2 py-2 text-xs cursor-pointer hover:text-white hover:bg-black transition-all duration-300 flex items-center gap-2">
 							<ShoppingCart className="size-4" />
 							Add to cart
 						</button>
