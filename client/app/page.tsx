@@ -9,8 +9,15 @@ export default async function Home({
 	const category = (await searchParams).category;
 	return (
 		<div className="">
-			<div className="relative aspect-3/1 mb-12">
-				<Image src="/featured.png" alt="featured" fill />
+			<div className="relative w-full mb-12">
+				<Image
+					src="/featured.png"
+					alt="featured"
+					width={1920}
+					height={640}
+					className="w-full h-auto"
+					priority
+				/>
 			</div>
 			<ProductList category={category} params="homepage" />
 		</div>
